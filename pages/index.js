@@ -6,7 +6,7 @@ import abi from "../abi.json";
 
 export default function Home() {
   const [web3, setWeb3] = useState(null);
-  const [address, setAddress] = useState(null);
+  const [walletAddress, setWalletAddress] = useState(null);
   const [contract, setContract] = useState(null);
   const [leftAmount, setLeftAmount] = useState(0);
   const [rightAmount, setRightAmount] = useState(0);
@@ -22,7 +22,8 @@ export default function Home() {
         .request({ method: "eth_requestAccounts" })
         .then((accounts) => {
           // If the object has been found, we set the Web3 object in our React state and also the logged-in address from MetaMask that we need to use later on.
-          setAddress(accounts[0]);
+          setWalletAddress(accounts[0]);
+          console.log(`walletAddress = ${walletAddress}`);
           let w3 = new Web3(ethereum);
           setWeb3(w3);
 
@@ -62,9 +63,7 @@ export default function Home() {
               />
             </label>
             <input
-              onClick={() => {
-                console.log("Hello!");
-              }}
+              onClick={() => processLeftBid(leftAmout)}
               type="submit"
               value="Submit"
             />
@@ -82,9 +81,7 @@ export default function Home() {
               />
             </label>
             <input
-              onClick={() => {
-                console.log("Hello!");
-              }}
+              onClick={() => processRightBid(leftAmout)}
               type="submit"
               value="Submit"
             />
