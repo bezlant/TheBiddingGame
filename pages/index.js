@@ -8,6 +8,8 @@ export default function Home() {
   const [web3, setWeb3] = useState(null);
   const [address, setAddress] = useState(null);
   const [contract, setContract] = useState(null);
+  const [leftAmount, setLeftAmount] = useState(0);
+  const [rightAmount, setRightAmount] = useState(0);
 
   let contractAddress = "0xF9772ca577617c86ef33A5E4725dA4B960190787";
   let Web3 = require("web3");
@@ -47,8 +49,48 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome!</h1>
-        <p className={styles.description}>Awesome description</p>
-        <div className={styles.grid}></div>
+        <div className={styles.grid}>
+          <div className={styles.card}>
+            <h2>Left</h2>
+            <label>
+              Amount:
+              <input
+                value={leftAmount}
+                onChange={(e) => setLeftAmount(e.target.value)}
+                type="number"
+                name="amount"
+              />
+            </label>
+            <input
+              onClick={() => {
+                console.log("Hello!");
+              }}
+              type="submit"
+              value="Submit"
+            />
+            <p>{leftAmount}</p>
+          </div>
+          <div className={styles.card}>
+            <h2>Right</h2>
+            <label>
+              Amount:
+              <input
+                value={rightAmount}
+                onChange={(e) => setRightAmount(e.target.value)}
+                type="number"
+                name="amount"
+              />
+            </label>
+            <input
+              onClick={() => {
+                console.log("Hello!");
+              }}
+              type="submit"
+              value="Submit"
+            />
+            <p>{rightAmount}</p>
+          </div>
+        </div>
       </main>
     </div>
   );
