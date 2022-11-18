@@ -9,7 +9,9 @@ export default function Home() {
   const [walletAddress, setWalletAddress] = useState(null);
   const [contract, setContract] = useState(null);
   const [amount, setAmount] = useState(0);
-  const [team, setTeam] = useState();
+  const [team, setTeam] = useState("");
+  const [hasJoined, setHasJoined] = useState(false);
+  const [isTeamChosen, setIsTeamChosen] = useState(true);
 
   const contractAddress = "0xF9772ca577617c86ef33A5E4725dA4B960190787";
   const gasLimit = 285000;
@@ -24,10 +26,8 @@ export default function Home() {
         .then((accounts) => {
           // If the object has been found, we set the Web3 object in our React state and also the logged-in address from MetaMask that we need to use later on.
           setWalletAddress(accounts[0]);
-          console.log(`walletAddress = ${walletAddress}`);
           let w3 = new Web3(ethereum);
           setWeb3(w3);
-
           // Adding the ABI to our smart contract in the code
           let contract = new w3.eth.Contract(abi, contractAddress);
           setContract(contract);
@@ -38,9 +38,36 @@ export default function Home() {
     }
   }, []);
 
+  const checkIfJoined = async () => {
+    // .then((res) => res);
+
+    console.log(amountBid);
+    console.log(`amountBid = ${Number(amountBid)}`);
+    return Number(amountBid);
+  };
+
   const processBid = () => {
+    if (team === "") {
+      setIsTeamChosen(false);
+      setTimeout(() => setIsTeamChosen(true), 2500);
+      return;
+    }
+
+    contract.methods
+      .Address_Amount(String(walletAddress))
+      .call()
+      .then((currentBidAmount) => {
+        if (Number(currentBidAmount) > 0) {
+          setHasJoined(true);
+          setTimeout(() => setHasJoined(false), 2500);
+        } else {
+          sendBidToBlockchain();
+        }
+      });
+  };
+
+  const sendBidToBlockchain = () => {
     const sendAmount = amount * 1000000000000000000;
-    console.log(sendAmount);
     switch (team) {
       case "left":
         contract.methods
@@ -113,6 +140,19 @@ export default function Home() {
             <h2>Right</h2>
           </div>
         </div>
+
+        {hasJoined && (
+          <div>
+            <h2 style={{ color: "crimson" }}>
+              You have already entered the game
+            </h2>
+          </div>
+        )}
+        {!isTeamChosen && (
+          <div>
+            <h2 style={{ color: "crimson" }}>Please select a team</h2>
+          </div>
+        )}
       </main>
     </div>
   );
