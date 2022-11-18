@@ -8,10 +8,11 @@ export default function Home() {
   const [web3, setWeb3] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
   const [contract, setContract] = useState(null);
-  const [leftAmount, setLeftAmount] = useState(0);
-  const [rightAmount, setRightAmount] = useState(0);
+  const [amount, setAmount] = useState(0);
+  const [team, setTeam] = useState();
 
-  let contractAddress = "0xF9772ca577617c86ef33A5E4725dA4B960190787";
+  const contractAddress = "0xF9772ca577617c86ef33A5E4725dA4B960190787";
+  const gasLimit = 285000;
   let Web3 = require("web3");
 
   // We do this when our page is done loading in a useEffect hook and put it into our state for later use.
@@ -37,6 +38,41 @@ export default function Home() {
     }
   }, []);
 
+  const processBid = () => {
+    const sendAmount = amount * 1000000000000000000;
+    console.log(sendAmount);
+    switch (team) {
+      case "left":
+        contract.methods
+          .placeat0()
+          .send({
+            gasLimit: String(gasLimit),
+            to: String(contractAddress),
+            from: String(walletAddress),
+            value: String(sendAmount),
+          })
+          .then(() => {
+            console.log("Success");
+          });
+        break;
+      case "right":
+        contract.methods
+          .placeat1()
+          .send({
+            gasLimit: String(gasLimit),
+            to: String(contractAddress),
+            from: String(walletAddress),
+            value: String(sendAmount),
+          })
+          .then(() => {
+            console.log("Success!");
+          });
+        break;
+      default:
+        console.log(`Error! The ${team} doesn't exist`);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -50,42 +86,31 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome!</h1>
+
         <div className={styles.grid}>
-          <div className={styles.card}>
+          <div
+            onClick={() => setTeam("left")}
+            className={team === "left" ? styles.cardClicked : styles.card}
+          >
             <h2>Left</h2>
-            <label>
-              Amount:
-              <input
-                value={leftAmount}
-                onChange={(e) => setLeftAmount(e.target.value)}
-                type="number"
-                name="amount"
-              />
-            </label>
-            <input
-              onClick={() => processLeftBid(leftAmout)}
-              type="submit"
-              value="Submit"
-            />
-            <p>{leftAmount}</p>
           </div>
-          <div className={styles.card}>
-            <h2>Right</h2>
+          <div className={styles.bidInput}>
             <label>
-              Amount:
+              eth:{" "}
               <input
-                value={rightAmount}
-                onChange={(e) => setRightAmount(e.target.value)}
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
                 type="number"
                 name="amount"
               />
             </label>
-            <input
-              onClick={() => processRightBid(leftAmout)}
-              type="submit"
-              value="Submit"
-            />
-            <p>{rightAmount}</p>
+            <input onClick={() => processBid()} type="submit" value="Submit" />
+          </div>
+          <div
+            onClick={() => setTeam("right")}
+            className={team === "right" ? styles.cardClicked : styles.card}
+          >
+            <h2>Right</h2>
           </div>
         </div>
       </main>
