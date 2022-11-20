@@ -64,10 +64,20 @@ export default function Home() {
           calculatePotentialGain();
         });
     }
-  }, [amount, connected, isTeamChosen]);
+  }, [amount, connected, team]);
 
   const calculatePotentialGain = () => {
-    // contract.methods.
+    contract.methods
+      .GetOptionPool()
+      .call()
+      .then((pool) => {
+        const leftTeamPool = Number(pool[0]);
+        const rightTeamPool = Number(pool[1]);
+        const userPool = Number(team === "left" ? leftTeamPool : rightTeamPool);
+        const totalGain =
+          (amount / (leftTeamPool + rightTeamPool)) * (userPool + amount) * 0.9;
+        setPotentialGain(totalGain.toFixed(6));
+      });
   };
 
   const processBid = () => {
