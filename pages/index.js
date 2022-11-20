@@ -2,16 +2,25 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import React, { useState, useEffect } from "react";
+
 import abi from "../abi.json";
 
 export default function Home() {
   const [web3, setWeb3] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
   const [contract, setContract] = useState(null);
+  const [connected, setConnected] = useState(false);
+
   const [amount, setAmount] = useState(0);
+
   const [team, setTeam] = useState("");
+  const [isTeamChosen, setIsTeamChosen] = useState(false);
+  const [choseTeamErr, setChoseTeamErr] = useState(false);
+
   const [hasJoined, setHasJoined] = useState(false);
-  const [isTeamChosen, setIsTeamChosen] = useState(true);
+
+  const [showPotentialGain, setShowPotentialGain] = useState(false);
+  const [potentialGain, setPotentialGain] = useState(0);
 
   const contractAddress = "0xF9772ca577617c86ef33A5E4725dA4B960190787";
   const gasLimit = 285000;
@@ -19,47 +28,63 @@ export default function Home() {
 
   // We do this when our page is done loading in a useEffect hook and put it into our state for later use.
   useEffect(() => {
-    // MetaMask injects the window.ethereum object into our browser whenever the extension is installed and active
-    if (window.ethereum) {
-      ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((accounts) => {
-          // If the object has been found, we set the Web3 object in our React state and also the logged-in address from MetaMask that we need to use later on.
-          setWalletAddress(accounts[0]);
-          let w3 = new Web3(ethereum);
-          setWeb3(w3);
-          // Adding the ABI to our smart contract in the code
-          let contract = new w3.eth.Contract(abi, contractAddress);
-          setContract(contract);
-        })
-        .catch((err) => console.log(err));
+    if (!connected) {
+      // MetaMask injects the window.ethereum object into our browser whenever the extension is installed and active
+      if (window.ethereum) {
+        ethereum
+          .request({ method: "eth_requestAccounts" })
+          .then((accounts) => {
+            // If the object has been found, we set the Web3 object in our React state and also the logged-in address from MetaMask that we need to use later on.
+            setWalletAddress(accounts[0]);
+            let w3 = new Web3(ethereum);
+            setWeb3(w3);
+            // Adding the ABI to our smart contract in the code
+            let contract = new w3.eth.Contract(abi, contractAddress);
+            setContract(contract);
+            setConnected(true);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        console.log("Please install MetaMask");
+      }
     } else {
-      console.log("Please install MetaMask");
+      contract.methods
+        .Address_Amount(String(walletAddress))
+        .call()
+        .then((currentBidAmount) => {
+          // User has placed a bid on the blockchain
+          if (Number(currentBidAmount) > 0) {
+            setHasJoined(true);
+            setAmount(currentBidAmount / 1000000000000000000);
+          }
+
+          isTeamChosen
+            ? setShowPotentialGain(true)
+            : setShowPotentialGain(false);
+          calculatePotentialGain();
+        });
     }
-  }, []);
+  }, [amount, connected, isTeamChosen]);
 
-  const checkIfJoined = async () => {
-    // .then((res) => res);
-
-    console.log(amountBid);
-    console.log(`amountBid = ${Number(amountBid)}`);
-    return Number(amountBid);
+  const calculatePotentialGain = () => {
+    // contract.methods.
   };
 
   const processBid = () => {
+    // Check if team is chosen
     if (team === "") {
-      setIsTeamChosen(false);
-      setTimeout(() => setIsTeamChosen(true), 2500);
+      setChoseTeamErr(true);
+      setTimeout(() => setChoseTeamErr(false), 2500);
       return;
     }
 
+    // Check if the user has already joined the bidding
     contract.methods
       .Address_Amount(String(walletAddress))
       .call()
       .then((currentBidAmount) => {
         if (Number(currentBidAmount) > 0) {
           setHasJoined(true);
-          setTimeout(() => setHasJoined(false), 2500);
         } else {
           sendBidToBlockchain();
         }
@@ -112,11 +137,14 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome!</h1>
+        <h1 className={styles.title}>Welcome !</h1>
 
         <div className={styles.grid}>
           <div
-            onClick={() => setTeam("left")}
+            onClick={() => {
+              setTeam("left");
+              setIsTeamChosen(true);
+            }}
             className={team === "left" ? styles.cardClicked : styles.card}
           >
             <h2>Left</h2>
@@ -126,29 +154,33 @@ export default function Home() {
               eth:{" "}
               <input
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
                 type="number"
                 name="amount"
+                readOnly={hasJoined}
               />
             </label>
-            <input onClick={() => processBid()} type="submit" value="Submit" />
+            {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
+            <input
+              onClick={() => processBid()}
+              type="submit"
+              value="Submit"
+              style={{ color: hasJoined ? "grey" : "gold" }}
+            />
           </div>
           <div
-            onClick={() => setTeam("right")}
+            onClick={() => {
+              setTeam("right");
+              setIsTeamChosen(true);
+            }}
             className={team === "right" ? styles.cardClicked : styles.card}
           >
             <h2>Right</h2>
           </div>
         </div>
-
-        {hasJoined && (
-          <div>
-            <h2 style={{ color: "crimson" }}>
-              You have already entered the game
-            </h2>
-          </div>
-        )}
-        {!isTeamChosen && (
+        {choseTeamErr && !hasJoined && (
           <div>
             <h2 style={{ color: "crimson" }}>Please select a team</h2>
           </div>
