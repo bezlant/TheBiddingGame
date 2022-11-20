@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import abi from "../abi.json";
 
