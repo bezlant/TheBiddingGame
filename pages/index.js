@@ -27,6 +27,7 @@ export default function Home() {
 
   const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
   const gasLimit = 285000
+
   const Web3 = require('web3')
 
   // We do this when our page is done loading in a useEffect hook and put it into our state for later use.
@@ -59,20 +60,19 @@ export default function Home() {
           // User has placed a bid on the blockchain
           if (Number(currentBidAmount) > 0) {
             setHasJoined(true)
-            setAmount(currentBidAmount / 1000000000000000000)
+            setAmount(Web3.utils.fromWei(currentBidAmount, 'ether'))
           }
 
+          calculatePotentialGain()
           isTeamChosen
             ? setShowPotentialGain(true)
             : setShowPotentialGain(false)
-          calculatePotentialGain()
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, connected, team])
 
   const eventPopUp = () => {
-    console.log('event popup')
     const placedEvent = contract.events.Placed(
       {
         filter: { ADDRESS: walletAddress },
@@ -102,6 +102,10 @@ export default function Home() {
         const leftTeamPool = Number(pool[0])
         const rightTeamPool = Number(pool[1])
         const userPool = Number(team === 'left' ? leftTeamPool : rightTeamPool)
+        console.log(`Amount: ${Number(amount)}`)
+        console.log(`leftTeamPool: ${Number(leftTeamPool)}`)
+        console.log(`rightTeamPool: ${Number(rightTeamPool)}`)
+        console.log(`userPool: ${Number(userPool)}`)
         const totalGain =
           (amount / (leftTeamPool + rightTeamPool)) * (userPool + amount) * 0.9
         setPotentialGain(totalGain.toFixed(6))
@@ -130,7 +134,7 @@ export default function Home() {
   }
 
   const sendBidToBlockchain = () => {
-    const sendAmount = amount * 1000000000000000000
+    const sendAmount = Web3.utils.toWei(amount, 'ether')
     switch (team) {
       case 'left':
         contract.methods
