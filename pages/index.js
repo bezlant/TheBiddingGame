@@ -166,12 +166,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Bidding</title>
+        <title>TheEther.bet</title>
         <meta
           name="description"
-          content="Put in some description for the SEO"
+          content="The ether bet let's you bid on your favorite team in real time"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="favicon.ico" />
       </Head>
 
       <main className={styles.main}>
