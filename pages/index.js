@@ -24,7 +24,7 @@ export default function Home() {
 
   const contractAddress = "0xF9772ca577617c86ef33A5E4725dA4B960190787";
   const gasLimit = 285000;
-  let Web3 = require("web3");
+  const Web3 = require("web3");
 
   // We do this when our page is done loading in a useEffect hook and put it into our state for later use.
   useEffect(() => {
@@ -64,6 +64,7 @@ export default function Home() {
           calculatePotentialGain();
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, connected, team]);
 
   const calculatePotentialGain = () => {
