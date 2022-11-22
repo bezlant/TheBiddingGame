@@ -196,20 +196,15 @@ export default function Home() {
               <Image
                 alt="Japanese flag"
                 src={leftFlag}
-                className={
-                  team === 'border border-black'
-                    ? 'border border-black'
-                    : team === 'left'
-                      ? 'border border-black grayscale-0'
-                      : 'border border-black grayscale'
-                }
+                className={`rounded-xl border-2 border-black ${team === 'right' ? 'grayscale' : ''
+                  }`}
                 width={1}
                 height={1}
                 layout="responsive"
                 quality={100}
               />
             </div>
-            <div className={styles.bidInput}>
+            <div className="flex flex-col">
               <label>
                 eth:{' '}
                 <input
@@ -245,13 +240,8 @@ export default function Home() {
                 height={1}
                 layout="responsive"
                 quality={100}
-                className={
-                  team === ''
-                    ? ''
-                    : team === 'right'
-                      ? 'grayscale-0'
-                      : 'grayscale'
-                }
+                className={`rounded-xl border-2 border-black ${team === 'left' ? 'grayscale' : ''
+                  }`}
               />
             </div>
           </div>
