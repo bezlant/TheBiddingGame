@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 
 import leftFlag from '../public/japan.png'
@@ -181,69 +180,66 @@ export default function Home() {
       </Head>
 
       <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat">
-        <div className="flex min-h-screen flex-1 flex-col items-center justify-center py-8 px-8">
-          <h1 className="m-0 text-4xl leading-tight">Match begins in:</h1>
-          <h1>Countdown here</h1>
+        <div className="flex min-h-screen  flex-1 flex-col items-center justify-around py-4 px-4">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-4xl leading-tight">Match begins in:</h1>
+            <h1>Countdown here</h1>
+          </div>
 
           <div className="flex max-w-screen-md flex-col flex-wrap items-center justify-center">
-            <div
-              onClick={() => {
-                setTeam('left')
-                setIsTeamChosen(true)
-              }}
-              className={team === 'left' ? '' : ''}
-            >
-              <Image
-                alt="Japanese flag"
-                src={leftFlag}
-                className={`rounded-xl border-2 border-black ${team === 'right' ? 'grayscale' : ''
-                  }`}
-                width={1}
-                height={1}
-                layout="responsive"
-                quality={100}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label>
-                eth:{' '}
-                <input
-                  value={amount}
-                  onChange={(e) => {
-                    setAmount(e.target.value)
-                  }}
-                  type="number"
-                  name="amount"
-                  readOnly={hasJoined}
+            <div className="flex flex-row">
+              <div
+                onClick={() => {
+                  setTeam('left')
+                  setIsTeamChosen(true)
+                }}
+                className={'flex-1 pr-3'}
+              >
+                <Image
+                  alt="Japanese flag"
+                  src={leftFlag}
+                  className={`border-1 h-full w-full rounded-xl border-gray-300 ${team === 'right' ? 'grayscale' : ''
+                    }`}
+                  quality={100}
                 />
-              </label>
-              {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
+              </div>
+              <div
+                onClick={() => {
+                  setTeam('right')
+                  setIsTeamChosen(true)
+                }}
+                className={'flex-1 pl-3'}
+              >
+                <Image
+                  alt="German flag"
+                  src={rightFlag}
+                  className={`border-1 h-full w-full rounded-xl border-gray-300 ${team === 'left' ? 'grayscale' : ''
+                    }`}
+                  quality={100}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <label>
+              eth:{' '}
               <input
-                onClick={() => processBid()}
-                type="submit"
-                value="Submit"
-                className={hasJoined ? 'text-red-500' : 'text-yellow-500'}
+                value={amount}
+                onChange={(e) => {
+                  setAmount(e.target.value)
+                }}
+                type="number"
+                name="amount"
+                readOnly={hasJoined}
               />
-            </div>
-            <div
-              onClick={() => {
-                setTeam('right')
-                setIsTeamChosen(true)
-              }}
-              className={team === 'right' ? styles.cardClicked : styles.card}
-            >
-              <Image
-                alt="German flag"
-                src={rightFlag}
-                // className="w-full"
-                width={1}
-                height={1}
-                layout="responsive"
-                quality={100}
-                className={`rounded-xl border-2 border-black ${team === 'left' ? 'grayscale' : ''
-                  }`}
-              />
-            </div>
+            </label>
+            {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
+            <input
+              onClick={() => processBid()}
+              type="submit"
+              value="Submit"
+              className={hasJoined ? 'text-red-500' : 'text-yellow-500'}
+            />
           </div>
           {hasEventFired && (
             <div>
