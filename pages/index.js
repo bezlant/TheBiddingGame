@@ -3,6 +3,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 
+import leftFlag from '../public/japan.png'
+import rightFlag from '../public/germany.png'
 import abi from '../abi.json'
 
 export default function Home() {
@@ -102,10 +104,10 @@ export default function Home() {
         const leftTeamPool = Number(pool[0])
         const rightTeamPool = Number(pool[1])
         const userPool = Number(team === 'left' ? leftTeamPool : rightTeamPool)
-        console.log(`Amount: ${Number(amount)}`)
-        console.log(`leftTeamPool: ${Number(leftTeamPool)}`)
-        console.log(`rightTeamPool: ${Number(rightTeamPool)}`)
-        console.log(`userPool: ${Number(userPool)}`)
+        // console.log(`Amount: ${Number(amount)}`)
+        // console.log(`leftTeamPool: ${Number(leftTeamPool)}`)
+        // console.log(`rightTeamPool: ${Number(rightTeamPool)}`)
+        // console.log(`userPool: ${Number(userPool)}`)
         const totalGain =
           (amount / (leftTeamPool + rightTeamPool)) * (userPool + amount) * 0.9
         setPotentialGain(totalGain.toFixed(6))
@@ -168,7 +170,7 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>TheEther.bet</title>
         <meta
@@ -178,62 +180,94 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome !</h1>
+      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat">
+        <div className="flex min-h-screen flex-1 flex-col items-center justify-center py-8 px-8">
+          <h1 className="m-0 text-4xl leading-tight">Match begins in:</h1>
+          <h1>Countdown here</h1>
 
-        <div className={styles.grid}>
-          <div
-            onClick={() => {
-              setTeam('left')
-              setIsTeamChosen(true)
-            }}
-            className={team === 'left' ? styles.cardClicked : styles.card}
-          >
-            <h2>Left</h2>
-          </div>
-          <div className={styles.bidInput}>
-            <label>
-              eth:{' '}
-              <input
-                value={amount}
-                onChange={(e) => {
-                  setAmount(e.target.value)
-                }}
-                type="number"
-                name="amount"
-                readOnly={hasJoined}
+          <div className="flex max-w-screen-md flex-col flex-wrap items-center justify-center">
+            <div
+              onClick={() => {
+                setTeam('left')
+                setIsTeamChosen(true)
+              }}
+              className={team === 'left' ? '' : ''}
+            >
+              <Image
+                alt="Japanese flag"
+                src={leftFlag}
+                className={
+                  team === 'border border-black'
+                    ? 'border border-black'
+                    : team === 'left'
+                      ? 'border border-black grayscale-0'
+                      : 'border border-black grayscale'
+                }
+                width={1}
+                height={1}
+                layout="responsive"
+                quality={100}
               />
-            </label>
-            {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
-            <input
-              onClick={() => processBid()}
-              type="submit"
-              value="Submit"
-              style={{ color: hasJoined ? 'grey' : 'gold' }}
-            />
+            </div>
+            <div className={styles.bidInput}>
+              <label>
+                eth:{' '}
+                <input
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value)
+                  }}
+                  type="number"
+                  name="amount"
+                  readOnly={hasJoined}
+                />
+              </label>
+              {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
+              <input
+                onClick={() => processBid()}
+                type="submit"
+                value="Submit"
+                className={hasJoined ? 'text-red-500' : 'text-yellow-500'}
+              />
+            </div>
+            <div
+              onClick={() => {
+                setTeam('right')
+                setIsTeamChosen(true)
+              }}
+              className={team === 'right' ? styles.cardClicked : styles.card}
+            >
+              <Image
+                alt="German flag"
+                src={rightFlag}
+                // className="w-full"
+                width={1}
+                height={1}
+                layout="responsive"
+                quality={100}
+                className={
+                  team === ''
+                    ? ''
+                    : team === 'right'
+                      ? 'grayscale-0'
+                      : 'grayscale'
+                }
+              />
+            </div>
           </div>
-          <div
-            onClick={() => {
-              setTeam('right')
-              setIsTeamChosen(true)
-            }}
-            className={team === 'right' ? styles.cardClicked : styles.card}
-          >
-            <h2>Right</h2>
-          </div>
+          {hasEventFired && (
+            <div>
+              <p>Team: {bid.team}</p>
+              <p>Address: {bid.address}</p>
+              <p>id: {bid.id}</p>
+            </div>
+          )}
+          {choseTeamErr && !hasJoined && (
+            <div>
+              <h2 style={{ color: 'crimson' }}>Please select a team</h2>
+            </div>
+          )}
         </div>
-        {hasEventFired && (
-          <div>
-            <p>Team: {bid.team}</p>
-            <p>Address: {bid.address}</p>
-            <p>id: {bid.id}</p>
-          </div>
-        )}
-        {choseTeamErr && !hasJoined && (
-          <div>
-            <h2 style={{ color: 'crimson' }}>Please select a team</h2>
-          </div>
-        )}
       </main>
     </div>
   )
