@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 
+import leftFlag from '../public/japan.png'
+import rightFlag from '../public/germany.png'
 import abi from '../abi.json'
 
 export default function Home() {
@@ -102,10 +103,10 @@ export default function Home() {
         const leftTeamPool = Number(pool[0])
         const rightTeamPool = Number(pool[1])
         const userPool = Number(team === 'left' ? leftTeamPool : rightTeamPool)
-        console.log(`Amount: ${Number(amount)}`)
-        console.log(`leftTeamPool: ${Number(leftTeamPool)}`)
-        console.log(`rightTeamPool: ${Number(rightTeamPool)}`)
-        console.log(`userPool: ${Number(userPool)}`)
+        // console.log(`Amount: ${Number(amount)}`)
+        // console.log(`leftTeamPool: ${Number(leftTeamPool)}`)
+        // console.log(`rightTeamPool: ${Number(rightTeamPool)}`)
+        // console.log(`userPool: ${Number(userPool)}`)
         const totalGain =
           (amount / (leftTeamPool + rightTeamPool)) * (userPool + amount) * 0.9
         setPotentialGain(totalGain.toFixed(6))
@@ -168,7 +169,7 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>TheEther.bet</title>
         <meta
@@ -178,20 +179,48 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome !</h1>
-
-        <div className={styles.grid}>
-          <div
-            onClick={() => {
-              setTeam('left')
-              setIsTeamChosen(true)
-            }}
-            className={team === 'left' ? styles.cardClicked : styles.card}
-          >
-            <h2>Left</h2>
+      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat">
+        <div className="flex min-h-screen  flex-1 flex-col items-center justify-around py-4 px-4">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-4xl leading-tight">Match begins in:</h1>
+            <h1>Countdown here</h1>
           </div>
-          <div className={styles.bidInput}>
+
+          <div className="flex max-w-screen-md flex-col flex-wrap items-center justify-center">
+            <div className="flex flex-row">
+              <div
+                onClick={() => {
+                  setTeam('left')
+                  setIsTeamChosen(true)
+                }}
+                className={'flex-1 pr-3'}
+              >
+                <Image
+                  alt="Japanese flag"
+                  src={leftFlag}
+                  className={`border-1 h-full w-full rounded-xl border-gray-300 ${team === 'right' ? 'grayscale' : ''
+                    }`}
+                  quality={100}
+                />
+              </div>
+              <div
+                onClick={() => {
+                  setTeam('right')
+                  setIsTeamChosen(true)
+                }}
+                className={'flex-1 pl-3'}
+              >
+                <Image
+                  alt="German flag"
+                  src={rightFlag}
+                  className={`border-1 h-full w-full rounded-xl border-gray-300 ${team === 'left' ? 'grayscale' : ''
+                    }`}
+                  quality={100}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col">
             <label>
               eth:{' '}
               <input
@@ -209,31 +238,22 @@ export default function Home() {
               onClick={() => processBid()}
               type="submit"
               value="Submit"
-              style={{ color: hasJoined ? 'grey' : 'gold' }}
+              className={hasJoined ? 'text-red-500' : 'text-yellow-500'}
             />
           </div>
-          <div
-            onClick={() => {
-              setTeam('right')
-              setIsTeamChosen(true)
-            }}
-            className={team === 'right' ? styles.cardClicked : styles.card}
-          >
-            <h2>Right</h2>
-          </div>
+          {hasEventFired && (
+            <div>
+              <p>Team: {bid.team}</p>
+              <p>Address: {bid.address}</p>
+              <p>id: {bid.id}</p>
+            </div>
+          )}
+          {choseTeamErr && !hasJoined && (
+            <div>
+              <h2 style={{ color: 'crimson' }}>Please select a team</h2>
+            </div>
+          )}
         </div>
-        {hasEventFired && (
-          <div>
-            <p>Team: {bid.team}</p>
-            <p>Address: {bid.address}</p>
-            <p>id: {bid.id}</p>
-          </div>
-        )}
-        {choseTeamErr && !hasJoined && (
-          <div>
-            <h2 style={{ color: 'crimson' }}>Please select a team</h2>
-          </div>
-        )}
       </main>
     </div>
   )
