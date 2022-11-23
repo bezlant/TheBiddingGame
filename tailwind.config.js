@@ -6,10 +6,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        SoccerLeague: ['SoccerLeague'],
+      },
+
       backgroundImage: {
         'hero-pattern': "url('../public/football.jpeg')",
       },
     },
   },
   plugins: [],
+  corePlugins: {
+    fontFamily: true,
+  },
 }
