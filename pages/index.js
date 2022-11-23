@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
+import ethsvg from '../public/eth.svg'
 import leftFlag from '../public/japan.png'
 import rightFlag from '../public/germany.png'
 import abi from '../abi.json'
@@ -181,25 +182,26 @@ export default function Home() {
 
       <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat">
         <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
-          <div className="flex flex-col items-center justify-center">
+          <div className="mt-8 flex flex-col items-center justify-center">
             <h1 className="text-4xl leading-tight">Match begins in:</h1>
             <h1>Countdown here</h1>
           </div>
 
-          <div className="flex max-w-screen-md flex-col flex-wrap items-center justify-center">
+          <div className="mt-16 mb-16 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
             <div className="flex flex-row">
               <div
                 onClick={() => {
                   setTeam('left')
                   setIsTeamChosen(true)
                 }}
-                className={'flex-1 pr-3'}
+                className={'mr-3 flex-1'}
               >
                 <Image
                   alt="Japanese flag"
                   src={leftFlag}
-                  className={`border-1 h-full w-full rounded-xl border-gray-300 ${team === 'right' ? 'grayscale' : ''
-                    }`}
+                  className={`border-1 h-full w-full rounded-xl border-gray-300 hover:border-4 hover:border-yellow-400 hover:opacity-90 ${
+                    team === 'right' ? 'grayscale' : 'border-4'
+                  }`}
                   quality={100}
                 />
               </div>
@@ -208,20 +210,29 @@ export default function Home() {
                   setTeam('right')
                   setIsTeamChosen(true)
                 }}
-                className={'flex-1 pl-3'}
+                className={'ml-3 flex-1'}
               >
                 <Image
                   alt="German flag"
                   src={rightFlag}
-                  className={`border-1 h-full w-full rounded-xl border-gray-300 ${team === 'left' ? 'grayscale' : ''
-                    }`}
+                  className={`border-1 h-full w-full rounded-xl border-gray-300 hover:border-4 hover:border-yellow-400 hover:opacity-90  ${
+                    team === 'left' ? 'grayscale' : 'border-4'
+                  }`}
                   quality={100}
                 />
               </div>
             </div>
           </div>
           <div className="flex flex-col">
-            <label>
+            <div class="relative ">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <Image
+                  alt="ethereum logo"
+                  src={ethsvg}
+                  quality={100}
+                  className="h-5 w-5 text-gray-500 dark:text-gray-400"
+                />
+              </div>
               <input
                 value={amount}
                 onChange={(e) => {
@@ -230,14 +241,14 @@ export default function Home() {
                 type="number"
                 name="amount"
                 readOnly={hasJoined}
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               />
-            </label>
+            </div>
             {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
             <input
               onClick={() => processBid()}
               type="submit"
-              value="Submit"
+              value="Pay"
               className={
                 'w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
               }
