@@ -2,12 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+@font-face {
+  font-family: 'SoccerLeague';
+  font-style: normal;
+  font-weight: 800;
+  src: local(''), url('../public/fonts/SoccerLeagueCollege.ttf') format('ttf');
 }

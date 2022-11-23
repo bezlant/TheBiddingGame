@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import CountdownTimer from '../components/CountdownTimer.js'
 
 import ethsvg from '../public/eth.svg'
 import leftFlag from '../public/japan.png'
@@ -26,6 +27,10 @@ export default function Home() {
 
   const [bid, setBid] = useState({ team: 0, address: 0, id: 0 })
   const [hasEventFired, setHasEventFired] = useState(false)
+
+  const [timeTillEnd, setTimeTillEnd] = useState(
+    new Date().getTime() + 3 * 24 * 60 * 60 * 1000
+  )
 
   const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
   const gasLimit = 285000
@@ -69,6 +74,15 @@ export default function Home() {
           isTeamChosen
             ? setShowPotentialGain(true)
             : setShowPotentialGain(false)
+        })
+      console.log(new Date().getTime() + 3 * 24 * 60 * 60 * 1000)
+
+      contract.methods
+        .EventEndTime()
+        .call()
+        .then((timeInSeconds) => {
+          const timeInMiliseconds = Number(timeInSeconds) * 1000
+          setTimeTillEnd(timeInMiliseconds)
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,7 +186,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>TheEther.bet</title>
+        <title>TheEtherBet</title>
         <meta
           name="description"
           content="The ether bet let's you bid on your favorite team in real time"
@@ -182,12 +196,12 @@ export default function Home() {
 
       <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat">
         <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
-          <div className="mt-8 flex flex-col items-center justify-center">
+          <div className="mt-14 flex flex-col items-center justify-center font-SoccerLeague text-white">
             <h1 className="text-4xl leading-tight">Match begins in:</h1>
-            <h1>Countdown here</h1>
+            <CountdownTimer targetDate={timeTillEnd} />
           </div>
 
-          <div className="mt-16 mb-16 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
+          <div className="mt-20 mb-20 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
             <div className="flex flex-row">
               <div
                 onClick={() => {
@@ -199,8 +213,10 @@ export default function Home() {
                 <Image
                   alt="Japanese flag"
                   src={leftFlag}
-                  className={`border-1 h-full w-full rounded-xl border-gray-300 hover:border-4 hover:border-yellow-400 hover:opacity-90 ${
-                    team === 'right' ? 'grayscale' : 'border-4'
+                  className={`h-full w-full rounded-xl border-2 border-blue-200 hover:border-2 hover:border-blue-400 hover:opacity-90 ${
+                    team === 'right'
+                      ? 'grayscale hover:grayscale-0'
+                      : 'border-1'
                   }`}
                   quality={100}
                 />
@@ -215,8 +231,8 @@ export default function Home() {
                 <Image
                   alt="German flag"
                   src={rightFlag}
-                  className={`border-1 h-full w-full rounded-xl border-gray-300 hover:border-4 hover:border-yellow-400 hover:opacity-90  ${
-                    team === 'left' ? 'grayscale' : 'border-4'
+                  className={`h-full w-full rounded-xl border-2 border-blue-200 hover:border-2  hover:border-blue-400 hover:opacity-90  ${
+                    team === 'left' ? 'grayscale hover:grayscale-0' : 'border-1'
                   }`}
                   quality={100}
                 />
@@ -224,8 +240,8 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col">
-            <div class="relative ">
-              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <div className="relative mb-2">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <Image
                   alt="ethereum logo"
                   src={ethsvg}
@@ -244,7 +260,6 @@ export default function Home() {
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               />
             </div>
-            {showPotentialGain && <div>Potential Gain : {potentialGain}</div>}
             <input
               onClick={() => processBid()}
               type="submit"
@@ -254,6 +269,16 @@ export default function Home() {
               }
             />
           </div>
+          {showPotentialGain && (
+            <div className="mt-4">
+              <p className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+                Potential:{' '}
+                <span className="underline-offset-3 underline decoration-green-200 decoration-8 dark:decoration-green-400">
+                  {potentialGain}
+                </span>
+              </p>
+            </div>
+          )}
           {hasEventFired && (
             <div>
               <p>Team: {bid.team}</p>
