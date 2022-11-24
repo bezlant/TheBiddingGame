@@ -7,16 +7,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        SoccerLeague: ['SoccerLeague'],
+        fugaz: ['"Fugaz One"', 'cursive'],
+        alfa: ['"Alfa Slab One"', 'cursive'],
+        squada: ['"Squada One"', 'cursive'],
       },
-
       backgroundImage: {
         'hero-pattern': "url('../public/football.jpeg')",
       },
     },
   },
   plugins: [],
-  corePlugins: {
-    fontFamily: true,
-  },
 }
