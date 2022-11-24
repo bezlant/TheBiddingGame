@@ -201,19 +201,23 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase">
+      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat font-alfa uppercase tracking-wider">
         <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
-          <div className="mt-14 flex flex-col items-center justify-center font-SoccerLeague text-white">
-            <h1 className="text-4xl leading-tight">Match begins in:</h1>
+          <div className="mt-14 flex flex-col items-center justify-center text-white">
+            <h1 className="text-4xl leading-tight">Starts in:</h1>
             <FlipClockCountdown
+              className="mt-8"
+              to={timeTillEnd}
               labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
               labelStyle={{
                 fontSize: 10,
                 fontWeight: 500,
                 textTransform: 'uppercase',
               }}
-              digitBlockStyle={{ width: 25, height: 40, fontSize: 30 }}
-              to={timeTillEnd}
+              digitBlockStyle={{ width: 29, height: 38, fontSize: 30 }}
+              dividerStyle={{ color: 'gray', height: 1 }}
+              separatorStyle={{ size: '6px' }}
+              duration={0.5}
             />
           </div>
 
@@ -287,7 +291,7 @@ export default function Home() {
           </div>
           {showPotentialGain && (
             <div className="mt-4">
-              <p className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+              <p className="mb-4 text-2xl font-extrabold leading-none tracking-wide text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
                 Potential:{' '}
                 <span className="underline-offset-3 underline decoration-green-200 decoration-8 dark:decoration-green-400">
                   {potentialGain}
