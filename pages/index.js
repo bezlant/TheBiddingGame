@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import CountdownTimer from '../components/CountdownTimer.js'
 
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown'
+import '@leenguyen/react-flip-clock-countdown/dist/index.css'
 import ethsvg from '../public/eth.svg'
 import leftFlag from '../public/japan.png'
 import rightFlag from '../public/germany.png'
@@ -14,7 +15,7 @@ export default function Home() {
   const [contract, setContract] = useState(null)
   const [connected, setConnected] = useState(false)
 
-  const [amount, setAmount] = useState(0)
+  const [userBidAmount, setAmount] = useState(0)
 
   const [team, setTeam] = useState('')
   const [isTeamChosen, setIsTeamChosen] = useState(false)
@@ -75,7 +76,6 @@ export default function Home() {
             ? setShowPotentialGain(true)
             : setShowPotentialGain(false)
         })
-      console.log(new Date().getTime() + 3 * 24 * 60 * 60 * 1000)
 
       contract.methods
         .EventEndTime()
@@ -86,7 +86,7 @@ export default function Home() {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amount, connected, team])
+  }, [userBidAmount, connected, team])
 
   const eventPopUp = () => {
     const placedEvent = contract.events.Placed(
@@ -115,15 +115,22 @@ export default function Home() {
       .GetOptionPool()
       .call()
       .then((pool) => {
-        const leftTeamPool = Number(pool[0])
-        const rightTeamPool = Number(pool[1])
-        const userPool = Number(team === 'left' ? leftTeamPool : rightTeamPool)
-        // console.log(`Amount: ${Number(amount)}`)
+        const leftTeamPool = Number(Web3.utils.fromWei(pool[0], 'ether'))
+        const rightTeamPool = Number(Web3.utils.fromWei(pool[1], 'ether'))
+        const oppositeTeamPool = team === 'left' ? rightTeamPool : leftTeamPool
+        const userBid = Number(userBidAmount)
+        const moneyPool =
+          leftTeamPool + rightTeamPool + (hasJoined ? -userBid : userBid)
+
+        // console.log(`Amount: ${Number(userBidAmount)}`)
         // console.log(`leftTeamPool: ${Number(leftTeamPool)}`)
         // console.log(`rightTeamPool: ${Number(rightTeamPool)}`)
-        // console.log(`userPool: ${Number(userPool)}`)
+        // console.log(`userPool: ${Number(oppositeTeamPool)}`)
+
         const totalGain =
-          (amount / (leftTeamPool + rightTeamPool)) * (userPool + amount) * 0.9
+          (userBid + (userBid / moneyPool) * oppositeTeamPool) * 0.9
+
+        // console.log(`totalGain: ${totalGain}`)
         setPotentialGain(totalGain.toFixed(6))
       })
   }
@@ -150,7 +157,7 @@ export default function Home() {
   }
 
   const sendBidToBlockchain = () => {
-    const sendAmount = Web3.utils.toWei(amount, 'ether')
+    const sendAmount = Web3.utils.toWei(userBidAmount, 'ether')
     switch (team) {
       case 'left':
         contract.methods
@@ -194,11 +201,20 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat">
+      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase">
         <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
           <div className="mt-14 flex flex-col items-center justify-center font-SoccerLeague text-white">
             <h1 className="text-4xl leading-tight">Match begins in:</h1>
-            <CountdownTimer targetDate={timeTillEnd} />
+            <FlipClockCountdown
+              labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
+              labelStyle={{
+                fontSize: 10,
+                fontWeight: 500,
+                textTransform: 'uppercase',
+              }}
+              digitBlockStyle={{ width: 25, height: 40, fontSize: 30 }}
+              to={timeTillEnd}
+            />
           </div>
 
           <div className="mt-20 mb-20 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
@@ -250,7 +266,7 @@ export default function Home() {
                 />
               </div>
               <input
-                value={amount}
+                value={userBidAmount}
                 onChange={(e) => {
                   setAmount(e.target.value)
                 }}
@@ -263,7 +279,7 @@ export default function Home() {
             <input
               onClick={() => processBid()}
               type="submit"
-              value="Pay"
+              value="PAY"
               className={
                 'w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
               }
