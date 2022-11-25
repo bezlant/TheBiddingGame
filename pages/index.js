@@ -72,7 +72,7 @@ export default function Home() {
           }
 
           calculatePotentialGain()
-          isTeamChosen
+          isTeamChosen && !isNaN(potentialGain)
             ? setShowPotentialGain(true)
             : setShowPotentialGain(false)
         })
@@ -233,7 +233,7 @@ export default function Home() {
                 <Image
                   alt="Japanese flag"
                   src={leftFlag}
-                  className={`h-full w-full rounded-xl border-2 border-blue-200 hover:border-2 hover:border-blue-400 hover:opacity-90 ${
+                  className={`h-full w-full rounded-xl border-2 border-blue-200 opacity-95 hover:border-2 hover:border-blue-400 hover:opacity-100 ${
                     team === 'right'
                       ? 'grayscale hover:grayscale-0'
                       : 'border-1'
@@ -251,7 +251,7 @@ export default function Home() {
                 <Image
                   alt="German flag"
                   src={rightFlag}
-                  className={`h-full w-full rounded-xl border-2 border-blue-200 hover:border-2  hover:border-blue-400 hover:opacity-90  ${
+                  className={`h-full w-full rounded-xl border-2 border-blue-200 opacity-95 hover:border-2  hover:border-blue-400 hover:opacity-100  ${
                     team === 'left' ? 'grayscale hover:grayscale-0' : 'border-1'
                   }`}
                   quality={100}
@@ -289,6 +289,15 @@ export default function Home() {
               }
             />
           </div>
+
+          {userBidAmount < 0.0009 && (
+            <div
+              className="mt-2 border-t border-b border-blue-500 bg-blue-100 px-4 py-3 text-blue-700"
+              role="alert"
+            >
+              <p className="text-sm">Minimal bid is 0.0009 eth</p>
+            </div>
+          )}
           {showPotentialGain && (
             <div className="mt-4">
               <p className="mb-4 text-2xl font-extrabold leading-none tracking-wide text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
@@ -307,8 +316,11 @@ export default function Home() {
             </div>
           )}
           {choseTeamErr && !hasJoined && (
-            <div>
-              <h2 style={{ color: 'crimson' }}>Please select a team</h2>
+            <div
+              className="mt-2 border-t border-b border-red-400 bg-red-100 px-4 py-3 text-red-700"
+              role="alert"
+            >
+              <p className="text-sm">Please select a team</p>
             </div>
           )}
         </div>
