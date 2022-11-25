@@ -201,10 +201,10 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat font-alfa uppercase tracking-wider">
+      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase tracking-wider">
         <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
-          <div className="mt-14 flex flex-col items-center justify-center text-white">
-            <h1 className="text-4xl leading-tight">Starts in:</h1>
+          <div className="mt-14 flex flex-col items-center justify-center font-alfa text-white">
+            <h1 className="font-fugaz text-4xl leading-tight">Starts in:</h1>
             <FlipClockCountdown
               className="mt-8"
               to={timeTillEnd}
@@ -214,7 +214,7 @@ export default function Home() {
                 fontWeight: 500,
                 textTransform: 'uppercase',
               }}
-              digitBlockStyle={{ width: 29, height: 38, fontSize: 30 }}
+              digitBlockStyle={{ width: 30, height: 37, fontSize: 30 }}
               dividerStyle={{ color: 'gray', height: 1 }}
               separatorStyle={{ size: '6px' }}
               duration={0.5}
@@ -277,7 +277,7 @@ export default function Home() {
                 type="number"
                 name="amount"
                 readOnly={hasJoined}
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 font-fugaz text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               />
             </div>
             <input
@@ -285,7 +285,7 @@ export default function Home() {
               type="submit"
               value="PAY"
               className={
-                'w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
+                'w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center font-fugaz text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
               }
             />
           </div>
