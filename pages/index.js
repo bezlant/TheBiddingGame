@@ -9,6 +9,7 @@ import ChooseTeamError from '../components/ChooseTeamError.js'
 import PotentialGain from '../components/PotentialGain.js'
 import ShowTeams from '../components/ShowTeams.js'
 import Countdown from '../components/Countdown.js'
+import LoadingSpinner from '../components/LoadingSpinner.js'
 
 import abi from '../abi.json'
 
@@ -35,6 +36,8 @@ export default function Home() {
   const [timeTillEnd, setTimeTillEnd] = useState(
     new Date().getTime() + 3 * 24 * 60 * 60 * 1000
   )
+
+  const [isLoading, setIsLoading] = useState(true)
 
   const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
   const gasLimit = 285000
@@ -88,6 +91,7 @@ export default function Home() {
           setTimeTillEnd(timeInMiliseconds)
         })
     }
+    setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userBidAmount, connected, team])
 
@@ -204,30 +208,38 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase tracking-wider">
-        <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
-          <Countdown timeTillEnd={timeTillEnd} />
-          <ShowTeams
-            setIsTeamChosen={setIsTeamChosen}
-            setTeam={setTeam}
-            team={team}
-          />
-          <div className="flex flex-col">
-            <BidInput
-              userBidAmount={userBidAmount}
-              setBidAmount={setBidAmount}
-              hasJoined={hasJoined}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase tracking-wider">
+          <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
+            <Countdown timeTillEnd={timeTillEnd} />
+            <ShowTeams
+              setIsTeamChosen={setIsTeamChosen}
+              setTeam={setTeam}
+              team={team}
             />
-            <SubmitBidButton processBid={processBid} />
+            <div className="flex flex-col">
+              <BidInput
+                userBidAmount={userBidAmount}
+                setBidAmount={setBidAmount}
+                hasJoined={hasJoined}
+              />
+              <SubmitBidButton processBid={processBid} />
+            </div>
+            {userBidAmount < 0.0009 && <MinimalBid />}
+            {showPotentialGain && <PotentialGain gain={potentialGain} />}
+            {hasEventFired && (
+              <BidEventResult
+                team={bid.team}
+                id={bid.id}
+                address={bid.address}
+              />
+            )}
+            {choseTeamErr && !hasJoined && <ChooseTeamError />}
           </div>
-          {userBidAmount < 0.0009 && <MinimalBid />}
-          {showPotentialGain && <PotentialGain gain={potentialGain} />}
-          {hasEventFired && (
-            <BidEventResult team={bid.team} id={bid.id} address={bid.address} />
-          )}
-          {choseTeamErr && !hasJoined && <ChooseTeamError />}
-        </div>
-      </main>
+        </main>
+      )}
     </div>
   )
 }
