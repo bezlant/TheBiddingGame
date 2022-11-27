@@ -10,16 +10,22 @@ import PotentialGain from '../components/PotentialGain.js'
 import ShowTeams from '../components/ShowTeams.js'
 import Countdown from '../components/Countdown.js'
 import LoadingSpinner from '../components/LoadingSpinner.js'
+import PoolSizeBar from '../components/PoolSizeBar.js'
 
 import abi from '../abi.json'
 
 export default function Home() {
+  const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
+  const gasLimit = 285000
+  const minimalBid = 0.0009
+  const Web3 = require('web3')
+
   const [web3, setWeb3] = useState(null)
   const [walletAddress, setWalletAddress] = useState(null)
   const [contract, setContract] = useState(null)
   const [connected, setConnected] = useState(false)
 
-  const [userBidAmount, setBidAmount] = useState(0.0009)
+  const [userBidAmount, setBidAmount] = useState(minimalBid)
 
   const [team, setTeam] = useState('')
   const [isTeamChosen, setIsTeamChosen] = useState(false)
@@ -29,20 +35,18 @@ export default function Home() {
 
   const [showPotentialGain, setShowPotentialGain] = useState(false)
   const [potentialGain, setPotentialGain] = useState(0)
+  const [leftPool, setLeftPool] = useState(0)
+  const [rightPool, setRightPool] = useState(0)
 
   const [bid, setBid] = useState({ team: 0, address: 0, id: 0 })
   const [hasEventFired, setHasEventFired] = useState(false)
+  const [showEventModal, setShowEventModal] = useState(false)
 
   const [timeTillEnd, setTimeTillEnd] = useState(
     new Date().getTime() + 3 * 24 * 60 * 60 * 1000
   )
 
   const [isLoading, setIsLoading] = useState(true)
-
-  const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
-  const gasLimit = 285000
-
-  const Web3 = require('web3')
 
   // We do this when our page is done loading in a useEffect hook and put it into our state for later use.
   useEffect(() => {
@@ -78,7 +82,7 @@ export default function Home() {
           }
 
           calculatePotentialGain()
-          isTeamChosen && !isNaN(potentialGain)
+          isTeamChosen && !isNaN(potentialGain) && userBidAmount > minimalBid
             ? setShowPotentialGain(true)
             : setShowPotentialGain(false)
         })
@@ -111,6 +115,7 @@ export default function Home() {
             address: res.ADDRESS,
             id: res.ID,
           })
+          setShowEventModal(true)
           setHasEventFired(true)
         }
       }
@@ -124,6 +129,9 @@ export default function Home() {
       .then((pool) => {
         const leftTeamPool = Number(Web3.utils.fromWei(pool[0], 'ether'))
         const rightTeamPool = Number(Web3.utils.fromWei(pool[1], 'ether'))
+        setLeftPool(leftTeamPool)
+        setRightPool(rightTeamPool)
+
         const oppositeTeamPool = team === 'left' ? rightTeamPool : leftTeamPool
         const userBid = Number(userBidAmount)
         const moneyPool =
@@ -219,6 +227,7 @@ export default function Home() {
               setTeam={setTeam}
               team={team}
             />
+            <PoolSizeBar leftPool={leftPool} rightPool={rightPool} />
             <div className="flex flex-col">
               <BidInput
                 userBidAmount={userBidAmount}
@@ -230,13 +239,14 @@ export default function Home() {
                 userBidAmount={userBidAmount}
               />
             </div>
-            {userBidAmount < 0.0009 && <MinimalBid />}
+            {userBidAmount < minimalBid && <MinimalBid />}
             {showPotentialGain && <PotentialGain gain={potentialGain} />}
-            {hasEventFired && (
+            {hasEventFired && showEventModal && (
               <BidEventResult
                 team={bid.team}
                 id={bid.id}
                 address={bid.address}
+                setShowEventModal={setShowEventModal}
               />
             )}
             {choseTeamErr && !hasJoined && <ChooseTeamError />}

@@ -1,10 +1,11 @@
 import leftFlag from '../public/japan.png'
 import rightFlag from '../public/germany.png'
 import Image from 'next/image'
+import PoolSizeBar from './PoolSizeBar'
 
 export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
   return (
-    <div className="mt-20 mb-20 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
+    <div className="mt-16 mb-8 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
       <div className="flex flex-row">
         <div
           onClick={() => {
