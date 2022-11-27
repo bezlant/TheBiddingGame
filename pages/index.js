@@ -220,7 +220,7 @@ export default function Home() {
         <LoadingSpinner />
       ) : (
         <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase tracking-wider">
-          <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
+          <div className="flex min-h-screen  flex-1 flex-col items-center justify-center py-4 px-4">
             <Countdown timeTillEnd={timeTillEnd} />
             <ShowTeams
               setIsTeamChosen={setIsTeamChosen}

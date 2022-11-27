@@ -3,7 +3,7 @@ import '@leenguyen/react-flip-clock-countdown/dist/index.css'
 
 export default function Countdown({ timeTillEnd }) {
   return (
-    <div className="mt-14 flex flex-col items-center justify-center font-alfa text-white">
+    <div className="flex flex-col items-center justify-center font-alfa text-white">
       <h1 className="font-fugaz text-4xl leading-tight">Starts in:</h1>
       <FlipClockCountdown
         className="mt-4"
