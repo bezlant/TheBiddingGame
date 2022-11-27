@@ -6,7 +6,7 @@ export default function Countdown({ timeTillEnd }) {
     <div className="mt-14 flex flex-col items-center justify-center font-alfa text-white">
       <h1 className="font-fugaz text-4xl leading-tight">Starts in:</h1>
       <FlipClockCountdown
-        className="mt-8"
+        className="mt-4"
         to={timeTillEnd}
         labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
         labelStyle={{
