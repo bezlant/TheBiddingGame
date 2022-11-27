@@ -13,7 +13,7 @@ export default function BidInput({ userBidAmount, setBidAmount, hasJoined }) {
         />
       </div>
       <input
-        value={userBidAmount}
+        value={userBidAmount < 0 ? 0 : userBidAmount}
         onChange={(e) => {
           setBidAmount(e.target.value)
         }}

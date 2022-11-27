@@ -225,7 +225,10 @@ export default function Home() {
                 setBidAmount={setBidAmount}
                 hasJoined={hasJoined}
               />
-              <SubmitBidButton processBid={processBid} />
+              <SubmitBidButton
+                processBid={processBid}
+                userBidAmount={userBidAmount}
+              />
             </div>
             {userBidAmount < 0.0009 && <MinimalBid />}
             {showPotentialGain && <PotentialGain gain={potentialGain} />}
