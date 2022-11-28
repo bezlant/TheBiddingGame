@@ -3,7 +3,13 @@ import rightFlag from '../public/germany.png'
 import Image from 'next/image'
 import PoolSizeBar from './PoolSizeBar'
 
-export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
+export default function ShowTeams({
+  setTeam,
+  setIsTeamChosen,
+  team,
+  leftPool,
+  rightPool,
+}) {
   return (
     <div className="mt-10 mb-8 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
       <div className="flex flex-row">
@@ -46,6 +52,7 @@ export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
           />
         </div>
       </div>
+      <PoolSizeBar leftPool={leftPool} rightPool={rightPool} />
     </div>
   )
 }

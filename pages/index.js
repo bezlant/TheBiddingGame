@@ -226,8 +226,9 @@ export default function Home() {
               setIsTeamChosen={setIsTeamChosen}
               setTeam={setTeam}
               team={team}
+              leftPool={leftPool}
+              rightPool={rightPool}
             />
-            <PoolSizeBar leftPool={leftPool} rightPool={rightPool} />
             <div className="flex flex-col">
               <BidInput
                 userBidAmount={userBidAmount}
