@@ -6,6 +6,7 @@ export default function Countdown({ timeTillEnd }) {
     document.documentElement.clientWidth || 0,
     window.innerWidth || 0
   )
+  // Work on responsiveness
 
   return (
     <div className="flex flex-col items-center justify-center font-alfa text-white">

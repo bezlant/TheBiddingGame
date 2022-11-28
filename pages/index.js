@@ -221,7 +221,7 @@ export default function Home() {
         <LoadingSpinner />
       ) : (
         <main className="bg-hero-pattern bg-cover bg-center uppercase tracking-wider">
-          <div className="flex min-h-screen  flex-1 flex-col items-center justify-center py-4 px-4">
+          <div className="flex min-h-screen  flex-1 flex-col items-center justify-center py-4 px-4 md:justify-around">
             <Countdown timeTillEnd={timeTillEnd} />
             <ShowTeams
               setIsTeamChosen={setIsTeamChosen}
