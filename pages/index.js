@@ -25,7 +25,7 @@ export default function Home() {
   const [contract, setContract] = useState(null)
   const [connected, setConnected] = useState(false)
 
-  const [userBidAmount, setBidAmount] = useState(minimalBid)
+  const [userBidAmount, setBidAmount] = useState(0.01)
 
   const [team, setTeam] = useState('')
   const [isTeamChosen, setIsTeamChosen] = useState(false)
@@ -238,6 +238,7 @@ export default function Home() {
               <SubmitBidButton
                 processBid={processBid}
                 userBidAmount={userBidAmount}
+                hasJoined={hasJoined}
               />
             </div>
             {userBidAmount < minimalBid && <MinimalBid />}
