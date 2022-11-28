@@ -13,6 +13,7 @@ import LoadingSpinner from '../components/LoadingSpinner.js'
 import PoolSizeBar from '../components/PoolSizeBar.js'
 
 import abi from '../abi.json'
+import Tooltip from '../components/Tooltip.js'
 
 export default function Home() {
   const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
@@ -230,6 +231,7 @@ export default function Home() {
               rightPool={rightPool}
             />
             <div className="flex flex-col">
+              <Tooltip />
               <BidInput
                 userBidAmount={userBidAmount}
                 setBidAmount={setBidAmount}
