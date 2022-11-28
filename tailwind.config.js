@@ -12,7 +12,7 @@ module.exports = {
         squada: ['"Squada One"', 'cursive'],
       },
       backgroundImage: {
-        'hero-pattern': "url('/football.png')",
+        'hero-pattern': "url('/4.jpg')",
       },
     },
   },
