@@ -13,6 +13,7 @@ import LoadingSpinner from '../components/LoadingSpinner.js'
 import PoolSizeBar from '../components/PoolSizeBar.js'
 
 import abi from '../abi.json'
+import Tooltip from '../components/Tooltip.js'
 
 export default function Home() {
   const contractAddress = '0xF9772ca577617c86ef33A5E4725dA4B960190787'
@@ -25,7 +26,7 @@ export default function Home() {
   const [contract, setContract] = useState(null)
   const [connected, setConnected] = useState(false)
 
-  const [userBidAmount, setBidAmount] = useState(minimalBid)
+  const [userBidAmount, setBidAmount] = useState(0.01)
 
   const [team, setTeam] = useState('')
   const [isTeamChosen, setIsTeamChosen] = useState(false)
@@ -219,16 +220,18 @@ export default function Home() {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase tracking-wider">
-          <div className="flex min-h-screen  flex-1 flex-col items-center justify-start py-4 px-4">
+        <main className="bg-hero-pattern bg-cover bg-center uppercase tracking-wider">
+          <div className="flex min-h-screen  flex-1 flex-col items-center justify-center py-4 px-4">
             <Countdown timeTillEnd={timeTillEnd} />
             <ShowTeams
               setIsTeamChosen={setIsTeamChosen}
               setTeam={setTeam}
               team={team}
+              leftPool={leftPool}
+              rightPool={rightPool}
             />
-            <PoolSizeBar leftPool={leftPool} rightPool={rightPool} />
             <div className="flex flex-col">
+              <Tooltip />
               <BidInput
                 userBidAmount={userBidAmount}
                 setBidAmount={setBidAmount}
@@ -237,6 +240,7 @@ export default function Home() {
               <SubmitBidButton
                 processBid={processBid}
                 userBidAmount={userBidAmount}
+                hasJoined={hasJoined}
               />
             </div>
             {userBidAmount < minimalBid && <MinimalBid />}

@@ -3,9 +3,15 @@ import rightFlag from '../public/germany.png'
 import Image from 'next/image'
 import PoolSizeBar from './PoolSizeBar'
 
-export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
+export default function ShowTeams({
+  setTeam,
+  setIsTeamChosen,
+  team,
+  leftPool,
+  rightPool,
+}) {
   return (
-    <div className="mt-16 mb-8 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
+    <div className="mt-10 mb-8 flex max-w-screen-md flex-col flex-wrap items-center justify-center">
       <div className="flex flex-row">
         <div
           onClick={() => {
@@ -17,6 +23,9 @@ export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
           <Image
             alt="Japanese flag"
             src={leftFlag}
+            priority={true}
+            width={159.5}
+            height={107}
             className={`h-full w-full rounded-xl border-2 border-blue-200 opacity-95 hover:border-2 hover:border-blue-400 hover:opacity-100 ${
               team === 'right' ? 'grayscale hover:grayscale-0' : 'border-1'
             }`}
@@ -33,6 +42,9 @@ export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
           <Image
             alt="German flag"
             src={rightFlag}
+            priority={true}
+            width={159.5}
+            height={107}
             className={`h-full w-full rounded-xl border-2 border-blue-200 opacity-95 hover:border-2  hover:border-blue-400 hover:opacity-100  ${
               team === 'left' ? 'grayscale hover:grayscale-0' : 'border-1'
             }`}
@@ -40,6 +52,7 @@ export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
           />
         </div>
       </div>
+      <PoolSizeBar leftPool={leftPool} rightPool={rightPool} />
     </div>
   )
 }
