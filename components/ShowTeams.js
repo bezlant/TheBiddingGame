@@ -18,6 +18,8 @@ export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
             alt="Japanese flag"
             src={leftFlag}
             priority={true}
+            width={159.5}
+            height={107}
             className={`h-full w-full rounded-xl border-2 border-blue-200 opacity-95 hover:border-2 hover:border-blue-400 hover:opacity-100 ${
               team === 'right' ? 'grayscale hover:grayscale-0' : 'border-1'
             }`}
@@ -35,6 +37,8 @@ export default function ShowTeams({ setTeam, setIsTeamChosen, team }) {
             alt="German flag"
             src={rightFlag}
             priority={true}
+            width={159.5}
+            height={107}
             className={`h-full w-full rounded-xl border-2 border-blue-200 opacity-95 hover:border-2  hover:border-blue-400 hover:opacity-100  ${
               team === 'left' ? 'grayscale hover:grayscale-0' : 'border-1'
             }`}

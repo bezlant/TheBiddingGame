@@ -219,7 +219,7 @@ export default function Home() {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <main className="h-screen w-screen bg-hero-pattern bg-cover bg-center bg-no-repeat uppercase tracking-wider">
+        <main className="bg-hero-pattern bg-cover bg-center uppercase tracking-wider">
           <div className="flex min-h-screen  flex-1 flex-col items-center justify-center py-4 px-4">
             <Countdown timeTillEnd={timeTillEnd} />
             <ShowTeams
