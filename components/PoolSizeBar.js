@@ -3,7 +3,7 @@ export default function PoolSizeBar({ leftPool, rightPool }) {
   const smallestWidth = 28
   return (
     // Show values on the left and right
-    <div className="mt-5 flex h-6 w-full justify-between rounded bg-red-500 font-alfa text-white">
+    <div className="mt-5 flex h-6 w-full justify-between rounded bg-red-500 font-sport text-white">
       <div
         className="inline-block h-6 rounded bg-blue-500"
         style={{

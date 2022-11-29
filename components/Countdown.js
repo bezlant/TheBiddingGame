@@ -9,21 +9,21 @@ export default function Countdown({ timeTillEnd }) {
   // Work on responsiveness
 
   return (
-    <div className="flex flex-col items-center justify-center font-alfa text-white">
-      <h1 className="font-fugaz text-4xl leading-tight">Starts in:</h1>
+    <div className="flex flex-col items-center justify-center font-sport text-white">
+      <h1 className="font-sport text-4xl leading-tight">Starts in:</h1>
       <FlipClockCountdown
         className="mt-4"
         to={timeTillEnd}
         labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
         labelStyle={{
-          fontSize: 10,
+          fontSize: 8,
           fontWeight: 500,
           textTransform: 'uppercase',
         }}
         digitBlockStyle={{
-          width: vw < 400 ? 21 : 30,
-          height: vw < 400 ? 30 : 37,
-          fontSize: vw < 400 ? 22 : 30,
+          width: vw < 400 ? 24 : 30,
+          height: vw < 400 ? 29 : 37,
+          fontSize: vw < 400 ? 23 : 30,
         }}
         dividerStyle={{ color: 'gray', height: 1 }}
         separatorStyle={{ size: '6px' }}

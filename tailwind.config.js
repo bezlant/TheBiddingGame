@@ -10,6 +10,7 @@ module.exports = {
         fugaz: ['"Fugaz One"', 'cursive'],
         alfa: ['"Alfa Slab One"', 'cursive'],
         squada: ['"Squada One"', 'cursive'],
+        sport: ['Sport', 'cursive'],
       },
       backgroundImage: {
         'hero-pattern': "url('/4.jpg')",
