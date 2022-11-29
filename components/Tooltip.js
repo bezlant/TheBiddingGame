@@ -16,7 +16,7 @@ export default function Tooltip() {
       <div className="absolute top-0 bottom-0 mt-6 hidden flex-col items-center group-hover:flex">
         <div className="h-3 w-3 rotate-45 bg-black"></div>
         <span className="relative z-10 bg-black p-2 text-xs leading-none text-white shadow-lg">
-          Fee: <br /> 5% for the community <br /> 5% for devs
+          Fee: <br /> 3% for the community <br /> 2% for devs
         </span>
       </div>
     </div>
