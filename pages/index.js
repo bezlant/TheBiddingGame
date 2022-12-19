@@ -11,6 +11,7 @@ import ShowTeams from '../components/ShowTeams.js'
 import Countdown from '../components/Countdown.js'
 import LoadingSpinner from '../components/LoadingSpinner.js'
 import PoolSizeBar from '../components/PoolSizeBar.js'
+import WithdrawModal from '../components/WithdrawModal.js'
 
 import abi from '../abi.json'
 import Tooltip from '../components/Tooltip.js'
@@ -42,6 +43,7 @@ export default function Home() {
   const [bid, setBid] = useState({ team: 0, address: 0, id: 0 })
   const [hasEventFired, setHasEventFired] = useState(false)
   const [showEventModal, setShowEventModal] = useState(false)
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false)
 
   const [timeTillEnd, setTimeTillEnd] = useState(
     new Date().getTime() + 3 * 24 * 60 * 60 * 1000
@@ -172,8 +174,19 @@ export default function Home() {
       })
   }
 
+  const withdrawBid = (eventId) => {
+    contract.methods
+      .Withdraw(eventId)
+      .call()
+      .then((res) => {
+        console.log(res)
+        setHasJoined(false)
+      })
+      .catch((err) => console.log(err))
+  }
+
   const sendBidToBlockchain = () => {
-    const sendAmount = Web3.utils.toWei(userBidAmount, 'ether')
+    const sendAmount = Web3.utils.toWei(String(userBidAmount), 'ether')
     switch (team) {
       case 'left':
         contract.methods
@@ -216,7 +229,6 @@ export default function Home() {
         />
         <link rel="icon" href="favicon.ico" />
       </Head>
-
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -238,13 +250,19 @@ export default function Home() {
                 hasJoined={hasJoined}
               />
               <SubmitBidButton
-                processBid={processBid}
+                processBid={hasJoined ? setShowWithdrawModal : processBid}
                 userBidAmount={userBidAmount}
                 hasJoined={hasJoined}
               />
             </div>
             {userBidAmount < minimalBid && <MinimalBid />}
             {showPotentialGain && <PotentialGain gain={potentialGain} />}
+            {showWithdrawModal && (
+              <WithdrawModal
+                withdrawBid={withdrawBid}
+                setShowWithdrawModal={setShowWithdrawModal}
+              />
+            )}
             {hasEventFired && showEventModal && (
               <BidEventResult
                 team={bid.team}
