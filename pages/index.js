@@ -44,6 +44,7 @@ export default function Home() {
   const [hasEventFired, setHasEventFired] = useState(false)
   const [showEventModal, setShowEventModal] = useState(false)
   const [showWithdrawModal, setShowWithdrawModal] = useState(false)
+  const [bidInProcess, setBidInProcess] = useState(false)
 
   const [timeTillEnd, setTimeTillEnd] = useState(
     new Date().getTime() + 3 * 24 * 60 * 60 * 1000
@@ -73,7 +74,7 @@ export default function Home() {
         console.log('Please install MetaMask')
       }
     } else {
-      eventPopUp()
+      if (!hasEventFired) eventPopUp()
       contract.methods
         .Address_Amount(String(walletAddress))
         .call()
@@ -119,6 +120,7 @@ export default function Home() {
             id: res.ID,
           })
           setShowEventModal(true)
+          setBidInProcess(false)
           setHasEventFired(true)
         }
       }
@@ -189,6 +191,7 @@ export default function Home() {
     const sendAmount = Web3.utils.toWei(String(userBidAmount), 'ether')
     switch (team) {
       case 'left':
+        setBidInProcess(true)
         contract.methods
           .placeat0()
           .send({
@@ -202,6 +205,7 @@ export default function Home() {
           })
         break
       case 'right':
+        setBidInProcess(true)
         contract.methods
           .placeat1()
           .send({
@@ -229,7 +233,7 @@ export default function Home() {
         />
         <link rel="icon" href="favicon.ico" />
       </Head>
-      {isLoading ? (
+      {isLoading || bidInProcess ? (
         <LoadingSpinner />
       ) : (
         <main className="bg-hero-pattern bg-cover bg-center uppercase tracking-wider">

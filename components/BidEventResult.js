@@ -15,13 +15,13 @@ export default function BidEventResult({
               <h3 className="text-xl">Successful Bid!</h3>
             </div>
             <div className="relative flex-auto p-4">
-              <p className="text-l my-1 leading-relaxed text-slate-500">
+              <p className="md:text-l my-1 text-sm leading-relaxed text-slate-500">
                 Team: {team}
               </p>
-              <p className="text-l my-1 leading-relaxed text-slate-500">
+              <p className="md:text-l my-1 break-all text-xs leading-relaxed text-slate-500">
                 Address: {address}
               </p>
-              <p className="text-l my-1 leading-relaxed text-slate-500">
+              <p className="md:text-l my-1 text-sm leading-relaxed text-slate-500">
                 id: {id}
               </p>
             </div>
