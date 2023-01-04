@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
 enum TextButtonVariant {
   'primary',
@@ -8,8 +8,8 @@ enum TextButtonVariant {
 }
 
 type TextButtonProps = {
-  variant?: keyof typeof TextButtonVariant;
-} & React.ComponentPropsWithRef<'button'>;
+  variant?: keyof typeof TextButtonVariant
+} & React.ComponentPropsWithRef<'button'>
 
 const TextButton = React.forwardRef<HTMLButtonElement, TextButtonProps>(
   (
@@ -48,8 +48,8 @@ const TextButton = React.forwardRef<HTMLButtonElement, TextButtonProps>(
       >
         {children}
       </button>
-    );
+    )
   }
-);
+)
 
-export default TextButton;
+export default TextButton

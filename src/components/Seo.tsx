@@ -1,37 +1,36 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-// !STARTERCONF Change these default meta
 const defaultMeta = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
-  siteName: 'Next.js + Tailwind CSS + TypeScript Starter',
-  description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  title: 'title',
+  siteName: 'siteName',
+  description: 'Bid on your favorite events in real time with ethereum',
+  url: 'https://TheEther.Bet',
   type: 'website',
   robots: 'follow, index',
   /**
    * No need to be filled, will be populated with openGraph function
    * If you wish to use a normal image, just specify the path below
    */
+
+  // !STARTERCONF Change these default meta
   image: 'https://tsnext-tw.thcl.dev/images/large-og.png',
-};
+}
 
 type SeoProps = {
-  date?: string;
-  templateTitle?: string;
-} & Partial<typeof defaultMeta>;
+  date?: string
+  templateTitle?: string
+} & Partial<typeof defaultMeta>
 
 export default function Seo(props: SeoProps) {
-  const router = useRouter();
+  const router = useRouter()
   const meta = {
     ...defaultMeta,
     ...props,
-  };
+  }
   meta['title'] = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
-    : meta.title;
+    : meta.title
 
   // Use siteName if there is templateTitle
   // but show full title if there is none
@@ -47,6 +46,7 @@ export default function Seo(props: SeoProps) {
     <Head>
       <title>{meta.title}</title>
       <meta name='robots' content={meta.robots} />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta content={meta.description} name='description' />
       <meta property='og:url' content={`${meta.url}${router.asPath}`} />
       <link rel='canonical' href={`${meta.url}${router.asPath}`} />
@@ -71,12 +71,6 @@ export default function Seo(props: SeoProps) {
             property='og:publish_date'
             content={meta.date}
           />
-          {/* // !STARTERCONF Remove or change to your name */}
-          <meta
-            name='author'
-            property='article:author'
-            content='Theodorus Clarence'
-          />
         </>
       )}
 
@@ -88,7 +82,7 @@ export default function Seo(props: SeoProps) {
       <meta name='msapplication-config' content='/favicon/browserconfig.xml' />
       <meta name='theme-color' content='#ffffff' />
     </Head>
-  );
+  )
 }
 
 // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
@@ -118,4 +112,4 @@ const favicons: Array<React.ComponentPropsWithoutRef<'link'>> = [
     color: '#00e887',
   },
   { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
-];
+]

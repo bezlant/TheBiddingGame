@@ -1,18 +1,18 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
 import UnstyledLink, {
   UnstyledLinkProps,
-} from '@/components/links/UnstyledLink';
+} from '@/components/links/UnstyledLink'
 
 enum PrimaryLinkVariant {
   'primary',
   'basic',
 }
 type PrimaryLinkProps = {
-  variant?: keyof typeof PrimaryLinkVariant;
-} & UnstyledLinkProps;
+  variant?: keyof typeof PrimaryLinkVariant
+} & UnstyledLinkProps
 
 const PrimaryLink = React.forwardRef<HTMLAnchorElement, PrimaryLinkProps>(
   ({ className, children, variant = 'primary', ...rest }, ref) => {
@@ -39,8 +39,8 @@ const PrimaryLink = React.forwardRef<HTMLAnchorElement, PrimaryLinkProps>(
       >
         {children}
       </UnstyledLink>
-    );
+    )
   }
-);
+)
 
-export default PrimaryLink;
+export default PrimaryLink
