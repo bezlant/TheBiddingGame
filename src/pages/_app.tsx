@@ -24,9 +24,11 @@ const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
 // 2. Configure wagmi client
 const chains = [mainnet, goerli]
+
 const { provider } = configureChains(chains, [
   walletConnectProvider({ projectId }),
 ])
+
 const wagmiClient = createClient({
   autoConnect: true,
   connectors: modalConnectors({ appName: 'TheEtherBet', chains }),
