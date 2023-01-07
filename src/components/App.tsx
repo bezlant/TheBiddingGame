@@ -6,8 +6,10 @@ import { useAccount, useContractRead } from 'wagmi'
 
 import { thegameAbi } from '@/data/thegameABI'
 
+import { contractAddress } from '@/constant/env'
+
 const thegameContractConfig = {
-  address: '0xf9772ca577617c86ef33a5e4725da4b960190787' as const,
+  address: contractAddress,
   abi: thegameAbi,
 }
 const App: FC = () => {
