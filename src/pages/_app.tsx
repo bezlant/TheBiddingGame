@@ -10,11 +10,13 @@ import { configureChains, createClient, goerli, WagmiConfig } from 'wagmi'
 
 import '@/styles/globals.css'
 
+import { PROJECT_ID } from '@/constant/env'
+
 // 1. Get projectID at https://cloud.walletconnect.com
-if (!process.env.NEXT_PUBLIC_PROJECT_ID)
+if (!PROJECT_ID)
   throw new Error('You need to provide NEXT_PUBLIC_PROJECT_ID env variable')
 
-const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
+const projectId = PROJECT_ID
 
 // 2. Configure wagmi client
 // TODO: Add mainnet when launching

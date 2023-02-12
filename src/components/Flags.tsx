@@ -1,5 +1,6 @@
-import clsxm from '@/lib/clsxm'
 import { FC } from 'react'
+
+import clsxm from '@/lib/clsxm'
 
 interface SvgProps {
   preserveAspectRatio: string

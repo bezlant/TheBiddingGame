@@ -14,3 +14,5 @@ export const theGameContractConfig = {
 	address: contractAddress,
 	abi: thegameAbi,
 }
+
+export const PROJECT_ID = process.env.NEXT_PUBLIC_PROJECT_ID
