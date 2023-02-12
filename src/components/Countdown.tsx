@@ -5,18 +5,23 @@ import '@leenguyen/react-flip-clock-countdown/dist/index.css'
 
 import { theGameContractConfig } from '@/constant/env'
 
+const threeDaysFromNow = new Date().getTime() + 3 * 24 * 60 * 60 * 1000
+
 const Countdown = () => {
   // Use those variables check the wagmi project examples
-  const { data, isRefetching, isSuccess, refetch } = useContractRead({
+  const { data: gotEventTimeEnd } = useContractRead({
     ...theGameContractConfig,
     functionName: 'EventEndTime',
   })
+
+  const eventTimeEnd = new Date(
+    gotEventTimeEnd ? gotEventTimeEnd.toNumber() * 1000 : threeDaysFromNow
+  )
+
   const vw = Math.max(
     document.documentElement.clientWidth || 0,
     window.innerWidth || 0
   )
-  // TODO: Remove placeholder at to= argument for FlipClockCountdown
-  // TODO: Work on responsiveness
 
   return (
     <>
@@ -24,11 +29,7 @@ const Countdown = () => {
         <h1 className='text-4xl leading-tight'>Starts in:</h1>
         <FlipClockCountdown
           className='mt-4'
-          to={
-            isNaN(Number(data))
-              ? new Date().getTime() + 3 * 24 * 60 * 60 * 1000
-              : Number(data)
-          }
+          to={eventTimeEnd}
           labels={['DAYS', 'HOURS', 'MINUTES', 'SECONDS']}
           labelStyle={{
             fontSize: 8,
