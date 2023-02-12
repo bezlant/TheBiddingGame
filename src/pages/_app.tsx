@@ -6,13 +6,7 @@ import {
 import { Web3Modal } from '@web3modal/react'
 import { AppProps } from 'next/app'
 import { useEffect, useState } from 'react'
-import {
-  configureChains,
-  createClient,
-  goerli,
-  mainnet,
-  WagmiConfig,
-} from 'wagmi'
+import { configureChains, createClient, goerli, WagmiConfig } from 'wagmi'
 
 import '@/styles/globals.css'
 
@@ -23,7 +17,8 @@ if (!process.env.NEXT_PUBLIC_PROJECT_ID)
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
 // 2. Configure wagmi client
-const chains = [mainnet, goerli]
+// TODO: Add mainnet when launching
+const chains = [goerli]
 
 const { provider } = configureChains(chains, [
   walletConnectProvider({ projectId }),
