@@ -1,5 +1,4 @@
 import { Web3Button } from '@web3modal/react';
-import { FC } from 'react';
 import { useAccount } from 'wagmi';
 
 import BidInput from '@/components/BidInput';
@@ -8,7 +7,7 @@ import Flags from '@/components/Flags';
 import SubmitBidButton from '@/components/SubmitBidButton';
 import withWagmi from '@/components/withWagmi';
 
-const App: FC = () => {
+const App: React.FC = () => {
   const { isConnected } = useAccount();
 
   return (
