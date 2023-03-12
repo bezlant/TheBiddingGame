@@ -5,6 +5,7 @@ import { useAccount } from 'wagmi';
 import BidInput from '@/components/BidInput';
 import Countdown from '@/components/Countdown';
 import Flags from '@/components/Flags';
+import SubmitBidButton from '@/components/SubmitBidButton';
 import withWagmi from '@/components/withWagmi';
 
 const App: FC = () => {
