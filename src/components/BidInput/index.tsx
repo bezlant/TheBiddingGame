@@ -1,4 +1,4 @@
-import { ReactComponent as EthereumSVG } from '@/eth.svg';
+import { ReactComponent as EthereumSVG } from '@/assets/svg/eth.svg';
 
 const BidInput = () => {
   return (
