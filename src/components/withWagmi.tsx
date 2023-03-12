@@ -5,12 +5,12 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { arbitrum, mainnet, polygon } from 'wagmi/chains';
+import { goerli } from 'wagmi/chains';
 
-if (process.env.PROJECT_ID === undefined)
+if (import.meta.env.VITE_PROJECT_ID === undefined)
   throw new Error('Please define the PROJECT_ID');
 
-const chains = [arbitrum, mainnet, polygon];
+const chains = [goerli];
 const projectId = import.meta.env.VITE_PROJECT_ID;
 
 const { provider } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -21,7 +21,7 @@ const wagmiClient = createClient({
 });
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
-const withWagmi = (Element: React.ComponentType) => (
+const withWagmi = (Element: React.FC) => (
   <>
     <WagmiConfig client={wagmiClient}>
       <Element />
