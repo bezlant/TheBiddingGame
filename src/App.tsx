@@ -7,11 +7,11 @@ import Flags from '@/components/Flags';
 import SubmitBidButton from '@/components/SubmitBidButton';
 import withWagmi from '@/components/withWagmi';
 
-const App: React.FC = () => {
+const App = () => {
   const { isConnected } = useAccount();
 
   return (
-    <div className="bg-primary-900 flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center bg-primary-900">
       {isConnected ? (
         <div>
           <Countdown />
