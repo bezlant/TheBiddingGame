@@ -6,17 +6,17 @@ export const thegameAbi = [
         indexed: true,
         internalType: 'address',
         name: 'previousOwner',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: true,
         internalType: 'address',
         name: 'newOwner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'OwnershipTransferred',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -25,23 +25,23 @@ export const thegameAbi = [
         indexed: true,
         internalType: 'uint256',
         name: 'OPTION',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: true,
         internalType: 'address',
         name: 'ADDRESS',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: true,
         internalType: 'uint256',
         name: 'ID',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'Placed',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -50,167 +50,167 @@ export const thegameAbi = [
         indexed: true,
         internalType: 'string',
         name: 'EVENT',
-        type: 'string',
+        type: 'string'
       },
       {
         indexed: true,
         internalType: 'uint256',
         name: 'OPTION',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'Winner',
-    type: 'event',
+    type: 'event'
   },
   {
     inputs: [],
     name: 'CancelEvent',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint8',
         name: 'option',
-        type: 'uint8',
-      },
+        type: 'uint8'
+      }
     ],
     name: 'EndEvent',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: 'quantity',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'option',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'amount',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'LuckyDraw',
     outputs: [
       {
         internalType: 'address[]',
         name: '',
-        type: 'address[]',
-      },
+        type: 'address[]'
+      }
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'string',
         name: 'eventname',
-        type: 'string',
+        type: 'string'
       },
       {
         internalType: 'uint256',
         name: 'endtime',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'fee',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'NewEvent',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'placeat0',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'placeat1',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'ToggleBetEntry',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'newOwner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: 'entryID',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'Withdraw',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     stateMutability: 'nonpayable',
-    type: 'constructor',
+    type: 'constructor'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: '',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'Address_Amount',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -219,11 +219,11 @@ export const thegameAbi = [
       {
         internalType: 'bool',
         name: '',
-        type: 'bool',
-      },
+        type: 'bool'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -232,11 +232,11 @@ export const thegameAbi = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -245,11 +245,11 @@ export const thegameAbi = [
       {
         internalType: 'string',
         name: '',
-        type: 'string',
-      },
+        type: 'string'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -258,11 +258,11 @@ export const thegameAbi = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -271,16 +271,16 @@ export const thegameAbi = [
       {
         internalType: 'uint256',
         name: 'Option0Pool',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'Option1Pool',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -289,11 +289,11 @@ export const thegameAbi = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -302,68 +302,68 @@ export const thegameAbi = [
       {
         internalType: 'bool',
         name: '',
-        type: 'bool',
-      },
+        type: 'bool'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'Option0',
     outputs: [
       {
         internalType: 'address',
         name: '',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'Option1',
     outputs: [
       {
         internalType: 'address',
         name: '',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'OptionPool',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -372,10 +372,10 @@ export const thegameAbi = [
       {
         internalType: 'address',
         name: '',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-] as const;
+    type: 'function'
+  }
+] as const
