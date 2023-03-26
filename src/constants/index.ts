@@ -6,3 +6,9 @@ export const theGameContractConfig = {
   address: contractAddress,
   abi: thegameAbi
 }
+
+export enum TEAM {
+  NONE,
+  LEFT,
+  RIGHT
+}
